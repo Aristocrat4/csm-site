@@ -8,22 +8,24 @@ import { site } from "@/lib/site";
 const STORAGE_KEY = "cookie-consent";
 type Consent = "accepted" | "declined";
 
-/** Loads gtag (GA4 + optional Google Ads) — only mounted after consent. */
+// Any configured gtag id (GA4 G-… and/or Google Ads AW-…) enables tracking.
+const tagIds = [site.gaId, site.adsConversionId].filter(Boolean);
+
+/** Loads gtag (GA4 and/or Google Ads) — only mounted after consent. */
 function Analytics() {
   return (
     <>
       <Script
         id="ga-src"
         strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${site.gaId}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${tagIds[0]}`}
       />
       <Script id="ga-init" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${site.gaId}');
-          ${site.adsConversionId ? `gtag('config', '${site.adsConversionId}');` : ""}
+          ${tagIds.map((id) => `gtag('config', '${id}');`).join("\n          ")}
         `}
       </Script>
     </>
@@ -44,8 +46,8 @@ export function CookieConsent() {
     setReady(true);
   }, []);
 
-  // No analytics configured → nothing collected, no banner needed.
-  if (!site.gaId) return null;
+  // No analytics/ads tag configured → nothing collected, no banner needed.
+  if (tagIds.length === 0) return null;
 
   function choose(value: Consent) {
     try {
