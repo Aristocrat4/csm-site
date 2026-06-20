@@ -16,8 +16,17 @@ export const site = {
   location: "Tbilisi, Georgia",
   timezone: "GMT+4",
 
-  /** Canonical site URL — override with NEXT_PUBLIC_SITE_URL once the domain is attached. */
-  url: env(process.env.NEXT_PUBLIC_SITE_URL) || "https://gala-d.vercel.app",
+  /**
+   * Canonical site URL (used for metadata, OG, sitemap, robots).
+   * Priority: explicit NEXT_PUBLIC_SITE_URL (set this to the custom domain) →
+   * Vercel's production domain (auto-injected on Vercel) → local placeholder.
+   */
+  url:
+    env(process.env.NEXT_PUBLIC_SITE_URL) ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "") ||
+    "https://gala-d.vercel.app",
 
   /** Integrations (owner-provided; see .env.example). */
   calendlyUrl: env(process.env.NEXT_PUBLIC_CALENDLY_URL),
