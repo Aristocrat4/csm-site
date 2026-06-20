@@ -27,9 +27,21 @@ export function Header() {
       <div className="mx-auto flex h-16 w-full max-w-[1080px] items-center justify-between px-6 sm:px-8">
         <Link
           href="/"
-          className="rounded-sm font-serif text-xl font-semibold tracking-tight text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+          aria-label="Gala D."
+          className="inline-flex items-center rounded-sm font-serif text-xl font-semibold tracking-tight text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
         >
-          Gala&nbsp;D<span className="text-accent">.</span>
+          <span>Gala</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo-head.png"
+            alt=""
+            width={30}
+            height={30}
+            className="logo-head mx-1 size-[30px] shrink-0 rounded-full object-cover"
+          />
+          <span>
+            D<span className="text-accent">.</span>
+          </span>
         </Link>
 
         <nav

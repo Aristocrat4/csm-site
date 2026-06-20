@@ -86,7 +86,25 @@ textarea {
 /* ── Scroll-reveal (opacity + small translate) ───────────────────────────
    Gated on html.js so content stays visible without JS and for crawlers.
    The no-preference media query keeps it off for reduced-motion users. */
+/* Logo wordmark head — pivot at the neck so the top swings left/right. */
+.logo-head {
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+@keyframes head-sway {
+  from {
+    transform: rotate(-5.5deg);
+  }
+  to {
+    transform: rotate(5.5deg);
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  .logo-head {
+    animation: head-sway 2s ease-in-out infinite alternate;
+  }
+
   html.js [data-reveal] {
     opacity: 0;
     transform: translateY(14px);
