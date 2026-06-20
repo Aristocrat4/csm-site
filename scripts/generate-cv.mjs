@@ -27,33 +27,13 @@ const skills =
 
 const experience = [
   {
-    role: "Front-End Developer — [Current Company]",
-    meta: "[Start] – Present",
+    // All engineering roles combined into one general entry (no employer names).
+    role: "Web Developer",
+    meta: "2022 – Present",
     bullets: [
-      "[Add 1–2 lines about your current role, framed toward users and stakeholders.]",
-    ],
-  },
-  {
-    role: "Software Engineer — Omedia",
-    meta: "May 2023 – May 2024",
-    bullets: [
-      "Built and maintained web apps and internal business tools used by teams daily.",
-      "Partnered with stakeholders to ship features; learned products from the user’s side.",
-    ],
-  },
-  {
-    role: "Web Engineer — TBC, Uzbekistan",
-    meta: "[Dates]",
-    bullets: [
-      "Developed internal CRM and business platforms that operations and support teams rely on.",
-      "Improved workflows and drove adoption of the tools with stakeholders.",
-    ],
-  },
-  {
-    role: "Front-End Developer, Intern — UniLab, Tbilisi",
-    meta: "Dec 2021 – Apr 2022",
-    bullets: [
-      "First step into tech; built user-facing interfaces and learned to ship reliable software.",
+      "Built and maintained web apps, CRMs, dashboards, and internal business platforms that customer and operations teams rely on daily.",
+      "Delivered an end-to-end internal platform that replaced manual spreadsheets, improving how a team and its customers tracked operations.",
+      "Partnered with stakeholders to ship what users actually needed — learning each product from the user’s side.",
     ],
   },
   {
@@ -66,17 +46,11 @@ const experience = [
   },
 ];
 
-const project = {
-  role: "Custom Operations Platform — Auto Import Company",
-  bullets: [
-    "Built an end-to-end internal platform replacing manual spreadsheets, improving how the team and its customers tracked operations.",
-  ],
+const training = {
+  text: "Completed an online Customer Success course led by Tekla, an Experience CSM Lead.",
+  link: "linkedin.com/in/teklatoppings",
 };
-
-const education =
-  "[Add education and any Customer Success certification — a short CSM course adds credibility.]";
-const languages =
-  "English (Conversational) · Georgian (Native) · [Add others]";
+const languages = "English · Georgian";
 
 // ── Render ───────────────────────────────────────────────────────────────
 const doc = await PDFDocument.create();
@@ -146,6 +120,16 @@ function entry({ role, meta, bullets }) {
   y -= 5;
 }
 
+function trainingBullet({ text, link }) {
+  page.drawText("•", { x: margin + 3, y: y - 9.5, font: sans, size: 9.5, color: accent });
+  for (const ln of wrap(text, sans, 9.5, contentW - 16)) {
+    page.drawText(ln, { x: margin + 16, y: y - 9.5, font: sans, size: 9.5, color: ink });
+    y -= 9.5 * 1.34;
+  }
+  page.drawText(link, { x: margin + 16, y: y - 9.5, font: sans, size: 9.5, color: accent });
+  y -= 9.5 * 1.34 + 5;
+}
+
 // Header
 page.drawText("GALAKTIONI DANELIA", { x: margin, y: y - 22, font: serifBold, size: 22, color: ink });
 y -= 22 * 1.25;
@@ -170,11 +154,8 @@ paragraph(skills, sans, 9.5, ink, { lh: 1.45 });
 section("Experience");
 for (const e of experience) entry(e);
 
-section("Selected Project");
-entry(project);
-
-section("Education & Certifications");
-paragraph(education, sans, 9.5, ink, { lh: 1.4 });
+section("Customer Success Training");
+trainingBullet(training);
 
 section("Languages");
 paragraph(languages, sans, 9.5, ink, { lh: 1.4 });

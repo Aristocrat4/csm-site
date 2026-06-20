@@ -22,7 +22,7 @@ function Portrait() {
         {hasHeadshot ? (
           <Image
             src="/headshot.jpg"
-            alt="Gala, smiling — Customer Success Manager"
+            alt="Gala — Customer Success Manager"
             fill
             priority
             sizes="(max-width: 1024px) 80vw, 420px"
