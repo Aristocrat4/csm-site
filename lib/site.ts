@@ -15,6 +15,10 @@ export const site = {
   email: "galadanelia1@gmail.com",
   location: "Tbilisi, Georgia",
   timezone: "GMT+4",
+  /** Public LinkedIn profile. Env override wins; falls back to the canonical URL. */
+  linkedinUrl:
+    env(process.env.NEXT_PUBLIC_LINKEDIN_URL) ||
+    "https://www.linkedin.com/in/galaktioni-danelia/",
 
   /**
    * Canonical site URL (used for metadata, OG, sitemap, robots).
